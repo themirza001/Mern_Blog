@@ -6,6 +6,9 @@ import About from './pages/About';
 import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Header from './Components/Header.jsx/Header';
+
+import FooterComponent from './Components/Header.jsx/FooterComponent';
+
 function App() {
   return (
     <BrowserRouter>
@@ -18,6 +21,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/projects" element={<Projects />} />
       </Routes>
+      <FooterComponent />
     </BrowserRouter>
   );
 }
