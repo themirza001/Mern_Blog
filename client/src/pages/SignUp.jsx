@@ -1,7 +1,8 @@
 import { Alert, Button, Label, TextInput, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useDispatch } from 'react-redux';
+import OAuth from './../Components/Header.jsx/OAuth';
+// import { useDispatch, useSelector } from 'react-redux';
 // import {
 //   signInStart,
 //   signInFailure,
@@ -10,10 +11,12 @@ import { Link, useNavigate } from 'react-router-dom';
 
 function SignUp() {
   const navigate = useNavigate();
-  //const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const [formData, setFormData] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
+  // const { loading, error: errorMessage } = useSelector((state) => state.user);
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
   };
@@ -23,6 +26,7 @@ function SignUp() {
     e.preventDefault();
     if (!formData.username || !formData.email || !formData.password) {
       return setErrorMessage('Please Fill Out All Details');
+      // return dispatch(signInFailure('Please Fill Out All Details'));
     }
     try {
       setLoading(true);
@@ -34,14 +38,20 @@ function SignUp() {
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if (data.success === false) return setErrorMessage(data.message);
+      if (data.success === false) {
+        return setErrorMessage(data.message);
+        // return dispatch(signInFailure(data.message));
+      }
+
       setLoading(false);
       if (res.ok) {
+        // dispatch(signInSuccess(data));
         navigate('/sign-in');
       }
     } catch (error) {
       setLoading(false);
       setErrorMessage(error.message);
+      // dispatch(error.message);
     }
   };
 
@@ -109,6 +119,7 @@ function SignUp() {
                   'Sign Up'
                 )}
               </Button>
+              <OAuth />
             </form>
             <div className="flex gap-2 text-sm mt-5">
               <span>Have an Account?</span>

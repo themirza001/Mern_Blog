@@ -7,7 +7,7 @@ import {
   signInFailure,
   signInSuccess,
 } from '../redux/user/userSlice';
-
+import OAuth from './../Components/Header.jsx/OAuth';
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -110,6 +110,7 @@ function SignIn() {
                   'Sign Up'
                 )}
               </Button>
+              <OAuth />
             </form>
             <div className="flex gap-2 text-sm mt-5">
               <span>{`Don't Have an Account?`}</span>

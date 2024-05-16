@@ -65,3 +65,58 @@ exports.signin = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.google = async (req, res, next) => {
+  const { email, name, googlePhotoUrl } = req.body;
+  try {
+    const user = await User.findOne({ email });
+    if (user) {
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY);
+      const { password, ...rest } = user._doc;
+      res
+        .status(200)
+        .cookie('access_token', token, {
+          httpOnly: true,
+        })
+        .json({
+          status: 'Success',
+          success: true,
+          data: {
+            user: rest,
+          },
+        });
+    } else {
+      const generatedPassword =
+        Math.random().toString(36).slice(-8) +
+        Math.random().toString(36).slice(-8);
+      const hashedPassword = await bcrypt.hash(generatedPassword, 12);
+      const newUser = await User.create({
+        username:
+          name.toLowercase().split(' ').join('') +
+          Math.random().toString(9).slice(-4),
+        email,
+        password: hashedPassword,
+        profilePicture: googlePhotoUrl,
+      });
+
+      const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY);
+
+      const { password, ...rest } = newUser._doc;
+
+      res
+        .status(200)
+        .cookie('access_token', token, {
+          httpOnly: true,
+        })
+        .json({
+          status: 'Success',
+          success: true,
+          data: {
+            user: rest,
+          },
+        });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
