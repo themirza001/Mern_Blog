@@ -1,8 +1,16 @@
 import { Alert, Button, Label, TextInput, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+// import { useDispatch } from 'react-redux';
+// import {
+//   signInStart,
+//   signInFailure,
+//   signInSuccess,
+// } from '../redux/user/userSlice';
+
 function SignUp() {
   const navigate = useNavigate();
+  //const dispatch = useDispatch();
   const [formData, setFormData] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -18,6 +26,8 @@ function SignUp() {
     }
     try {
       setLoading(true);
+      setErrorMessage(null);
+      // dispatch(signInStart());
       const res = await fetch('/api/v1/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
