@@ -2,9 +2,12 @@ const express = require('express');
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
 const AppError = require('./utils/AppError');
+const dotenv = require('dotenv');
 
+dotenv.config();
 const app = express();
 app.use(express.json());
+
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);
 
