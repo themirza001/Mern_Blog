@@ -1,7 +1,8 @@
 import { Alert, Button, Label, TextInput, Spinner } from 'flowbite-react';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 function SignUp() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState([]);
   const [errorMessage, setErrorMessage] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,9 @@ function SignUp() {
       const data = await res.json();
       if (data.success === false) return setErrorMessage(data.message);
       setLoading(false);
+      if (res.ok) {
+        navigate('/sign-in');
+      }
     } catch (error) {
       setLoading(false);
       setErrorMessage(error.message);
@@ -38,7 +42,7 @@ function SignUp() {
         <div className="flex-1">
           <Link to="/home" className="font-bold dark:text-white text-4xl">
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-lg text-white">
-              Mirza's
+              {`Mirza's`}
             </span>
             Blog
           </Link>
