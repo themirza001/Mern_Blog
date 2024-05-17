@@ -15,13 +15,7 @@ exports.signup = async (req, res, next) => {
       email,
       password: hashedPassword,
     });
-    res.status(201).json({
-      status: 'success',
-      success: true,
-      data: {
-        user: newUser,
-      },
-    });
+    res.status(201).json(newUser);
   } catch (err) {
     next(new AppError(400, err.message));
   }
@@ -54,13 +48,7 @@ exports.signin = async (req, res, next) => {
       .cookie('access_token', token, {
         httpOnly: true,
       })
-      .json({
-        status: 'success',
-        message: 'Sign In SuccessFull',
-        data: {
-          user: rest,
-        },
-      });
+      .json(rest);
   } catch (err) {
     next(err);
   }
@@ -78,21 +66,16 @@ exports.google = async (req, res, next) => {
         .cookie('access_token', token, {
           httpOnly: true,
         })
-        .json({
-          status: 'Success',
-          success: true,
-          data: {
-            user: rest,
-          },
-        });
+        .json(rest);
     } else {
+      // console.log(googlePhotoUrl);
       const generatedPassword =
         Math.random().toString(36).slice(-8) +
         Math.random().toString(36).slice(-8);
       const hashedPassword = await bcrypt.hash(generatedPassword, 12);
       const newUser = await User.create({
         username:
-          name.toLowercase().split(' ').join('') +
+          name.toLowerCase().split(' ').join('') +
           Math.random().toString(9).slice(-4),
         email,
         password: hashedPassword,
@@ -108,13 +91,7 @@ exports.google = async (req, res, next) => {
         .cookie('access_token', token, {
           httpOnly: true,
         })
-        .json({
-          status: 'Success',
-          success: true,
-          data: {
-            user: rest,
-          },
-        });
+        .json(rest);
     }
   } catch (error) {
     console.log(error);
