@@ -1,7 +1,7 @@
 import { Alert, Button, Label, TextInput, Spinner } from 'flowbite-react';
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import OAuth from './../Components/Header.jsx/OAuth';
+import OAuth from '../Components/OAuth';
 // import { useDispatch, useSelector } from 'react-redux';
 // import {
 //   signInStart,

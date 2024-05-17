@@ -7,7 +7,7 @@ import {
   signInFailure,
   signInSuccess,
 } from '../redux/user/userSlice';
-import OAuth from './../Components/Header.jsx/OAuth';
+import OAuth from '../Components/OAuth';
 function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
