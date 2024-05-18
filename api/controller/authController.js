@@ -2,11 +2,12 @@ const AppError = require('../utils/AppError');
 const User = require('./../models/userModel');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+
 exports.signup = async (req, res, next) => {
   const { username, email, password } = req.body;
 
   if (!username || !password || !email)
-    return next(new AppError(400, 'All Fields Are required'));
+    return next(new AppError(400, 'All Fields Are required :('));
   try {
     const hashedPassword = await bcrypt.hash(password, 12);
 

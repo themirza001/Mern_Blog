@@ -3,10 +3,12 @@ const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
 const AppError = require('./utils/AppError');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 
 dotenv.config();
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);
