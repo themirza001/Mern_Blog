@@ -1,6 +1,7 @@
 const express = require('express');
 const userRouter = require('./routes/userRoutes');
 const authRouter = require('./routes/authRoutes');
+const postRouter = require('./routes/postRoutes');
 const AppError = require('./utils/AppError');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
@@ -12,7 +13,7 @@ app.use(cookieParser());
 
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);
-
+app.use('/api/v1/post', postRouter);
 app.all('*', (req, res, next) => {
   return next(new AppError(404, 'Web Page Does Not Exist :)'));
 });
