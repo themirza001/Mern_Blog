@@ -11,6 +11,7 @@ import {
 import { app } from './../../firebase';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+
 import {
   updateStart,
   updateSuccess,
@@ -20,6 +21,7 @@ import {
   deleteUserFailure,
   signoutSuccess,
 } from '../redux/user/userSlice';
+
 import { useDispatch } from 'react-redux';
 import { HiOutlineExclamationCircle } from 'react-icons/hi';
 import { Link } from 'react-router-dom';
