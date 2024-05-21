@@ -55,3 +55,26 @@ exports.updateUser = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.deleteUser = async (req, res, next) => {
+  if (req.user.id !== req.params.userId)
+    return next(new AppError(403, 'You Are Not Allowed to delete this User'));
+  try {
+    console.log(req.params.id);
+    await User.findByIdAndDelete(req.user.id);
+    res.json('user has been deleted');
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.signout = async (req, res, next) => {
+  try {
+    res
+      .clearCookie('access_token')
+      .status(200)
+      .json('User has been signed out');
+  } catch (err) {
+    next(err);
+  }
+};

@@ -1,4 +1,4 @@
-import { Alert, Button, Modal, ModalBody, TextInput } from 'flowbite-react';
+import { Alert, Button, Modal, TextInput } from 'flowbite-react';
 import { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import {
@@ -140,13 +140,18 @@ export default function DashProfile() {
       const res = await fetch(`/api/v1/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
+      // console.log(res);
       const data = await res.json();
+      // console.log(data);
       if (!res.ok) {
+        //console.log(data.message);
         dispatch(deleteUserFailure(data.message));
       } else {
+        //console.log(data);
         dispatch(deleteUserSuccess(data));
       }
     } catch (error) {
+      //console.log(error.message);
       dispatch(deleteUserFailure(error.message));
     }
   };
@@ -293,7 +298,7 @@ export default function DashProfile() {
             </h3>
             <div className="flex justify-center gap-4">
               <Button color="failure" onClick={handleDeleteUser}>
-                Yes, I'm sure
+                {`Yes, I'm sure`}
               </Button>
               <Button color="gray" onClick={() => setShowModal(false)}>
                 No, cancel
