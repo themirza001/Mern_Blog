@@ -25,6 +25,11 @@ const postSchema = new mongoose.Schema(
       required: [true, 'Please Provide Slug'],
       unique: true,
     },
+    title: {
+      type: String,
+      required: [true, 'Please Provide title'],
+      unique: true,
+    },
   },
   { timestamps: true }
 );
