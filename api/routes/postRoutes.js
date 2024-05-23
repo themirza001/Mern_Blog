@@ -5,20 +5,16 @@ const {
   createPost,
   getPosts,
   deletePosts,
+  updatePosts,
 } = require('./../controller/postController');
 const router = express.Router();
-
-const check = (req, res, next) => {
-  console.log('Hello from the middlwar');
-  next();
-};
 
 router.route('/create').post(verifyToken, createPost);
 
 router.route('/getposts').get(getPosts);
 
-router
-  .route('/deletepost/:postId/:userId')
-  .delete(check, verifyToken, deletePosts);
+router.route('/deletepost/:postId/:userId').delete(verifyToken, deletePosts);
+
+router.route('/updatepost/:postId/:userId').put(verifyToken, updatePosts);
 
 module.exports = router;
