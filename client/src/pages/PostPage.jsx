@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Spinner, Button } from 'flowbite-react';
 import { Link } from 'react-router-dom';
+import CallToAction from '../Components/CallToAction';
 
 function PostPage() {
   const { postSlug } = useParams();
@@ -19,6 +20,7 @@ function PostPage() {
           //   console.log('not ok');
           setError(true);
           setLoading(false);
+          console.log(error);
         } else {
           setPost(data.posts[0]);
           setLoading(false);
@@ -37,7 +39,7 @@ function PostPage() {
       </div>
     );
   return (
-    <div className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
+    <main className="p-3 flex flex-col max-w-6xl mx-auto min-h-screen">
       <h1 className="text-3xl mt-10 p-3 text-center font-serif max-w-2xl mx-auto lg:text-4xl">
         {post && post.title}
       </h1>
@@ -64,7 +66,10 @@ function PostPage() {
         className="p-3 max-w-2xl max-auto w-full post-content"
         dangerouslySetInnerHTML={{ __html: post && post.content }}
       ></div>
-    </div>
+      <div>
+        <CallToAction></CallToAction>
+      </div>
+    </main>
   );
 }
 
