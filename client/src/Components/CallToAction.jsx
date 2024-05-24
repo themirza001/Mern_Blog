@@ -14,8 +14,8 @@ export default function CallToAction() {
         >
           <a
             href="https://www.100jsprojects.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            // target="_blank"
+            // rel="noopener noreferrer"
           >
             100 JavaScript Projects
           </a>

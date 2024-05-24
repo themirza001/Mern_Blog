@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Spinner, Button } from 'flowbite-react';
 import { Link } from 'react-router-dom';
 import CallToAction from '../Components/CallToAction';
+import CommentSection from '../Components/CommentSection';
 
 function PostPage() {
   const { postSlug } = useParams();
@@ -69,6 +70,7 @@ function PostPage() {
       <div>
         <CallToAction></CallToAction>
       </div>
+      <CommentSection postId={post._id} />
     </main>
   );
 }
