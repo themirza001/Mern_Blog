@@ -58,6 +58,7 @@ function CommentSection({ postId }) {
       console.log(err.message);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (comment.length > 200) {
@@ -86,6 +87,16 @@ function CommentSection({ postId }) {
     } catch (err) {
       setError(err.message);
     }
+  };
+
+  const handleEdit = async (comment, editedContent) => {
+    setComments(
+      comments.map((currCmnt) =>
+        currCmnt._id === comment._id
+          ? { ...currCmnt, content: editedContent }
+          : currCmnt
+      )
+    );
   };
   return (
     <div className="max-w-2xl mx-auto w-full p-3">
@@ -150,7 +161,12 @@ function CommentSection({ postId }) {
             </div>
           </div>
           {comments.map((comment) => (
-            <Comment key={comment?._id} comment={comment} onLike={handleLike} />
+            <Comment
+              key={comment?._id}
+              comment={comment}
+              onLike={handleLike}
+              onEdit={handleEdit}
+            />
           ))}
         </>
       )}
