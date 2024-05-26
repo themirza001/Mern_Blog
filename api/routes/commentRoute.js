@@ -14,4 +14,8 @@ router
 router
   .route('/editComment/:commentId')
   .put(verifyToken, commentController.editComment);
+
+router
+  .route('/deleteComment/:commentId')
+  .delete(verifyToken, commentController.deleteComment);
 module.exports = router;

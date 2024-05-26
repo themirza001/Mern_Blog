@@ -4,7 +4,7 @@ import { FaThumbsUp } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { Textarea, Button } from 'flowbite-react';
-const Comment = ({ comment, onLike, onEdit }) => {
+const Comment = ({ comment, onLike, onEdit, onDelete }) => {
   const { currentUser } = useSelector((state) => state.user);
   const [user, setUser] = useState({});
   const [isEditing, setIsEditing] = useState(false);
@@ -41,8 +41,8 @@ const Comment = ({ comment, onLike, onEdit }) => {
           content: editedContent,
         }),
       });
-      const data = await res.json();
-      console.log(data);
+      //   const data = await res.json();
+
       if (res.ok) {
         setIsEditing(false);
         onEdit(comment, editedContent);
@@ -120,13 +120,22 @@ const Comment = ({ comment, onLike, onEdit }) => {
               </p>
               {currentUser &&
                 (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                  <button
-                    type="button"
-                    className="text-gray-400 hover:text-red-500"
-                    onClick={handleEdit}
-                  >
-                    Edit
-                  </button>
+                  <>
+                    <button
+                      type="button"
+                      className="text-gray-400 hover:text-blue-500"
+                      onClick={handleEdit}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      type="button"
+                      className="text-gray-400 hover:text-red-500"
+                      onClick={() => onDelete(comment._id)}
+                    >
+                      Delete
+                    </button>
+                  </>
                 )}
             </div>
           </>
@@ -148,6 +157,7 @@ Comment.propTypes = {
   }).isRequired,
   onLike: PropTypes.func.isRequired,
   onEdit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 };
 
 export default Comment;

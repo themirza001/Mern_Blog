@@ -1,8 +1,9 @@
-import { Textarea, Button, Alert } from 'flowbite-react';
+import { Textarea, Button, Alert, Modal } from 'flowbite-react';
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import Comment from './Comment';
+import { HiOutlineExclamationCircle } from 'react-icons/hi';
 
 function CommentSection({ postId }) {
   const navigate = useNavigate();
@@ -10,6 +11,9 @@ function CommentSection({ postId }) {
   const [comment, setComment] = useState(''); //used to fetch the comment formthe front end
   const [error, setError] = useState(null);
   const [comments, setComments] = useState([]); //used to store the recieved array of comments from the backend
+  const [showModal, setShowModal] = useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
+
   useEffect(() => {
     const getComments = async () => {
       try {
@@ -64,7 +68,6 @@ function CommentSection({ postId }) {
     if (comment.length > 200) {
       return;
     }
-
     try {
       const res = await fetch('/api/v1/comment/create', {
         method: 'POST',
@@ -89,6 +92,31 @@ function CommentSection({ postId }) {
     }
   };
 
+  const handleDelete = async (commentId) => {
+    setShowModal(false);
+    try {
+      if (!currentUser) {
+        navigate('/sign-in');
+        return; // Ensure the function exits after navigation
+      }
+
+      const res = await fetch(`/api/v1/comment/deleteComment/${commentId}`, {
+        method: 'DELETE',
+      });
+      // console.log('handle delete is called');
+      const data = await res.json();
+      if (res.ok) {
+        // console.log('everything is ok');
+        setComments(comments.filter((comment) => comment._id !== commentId));
+      } else {
+        // Handle any errors from the response
+        console.error('Failed to delete comment:', data.message);
+      }
+    } catch (err) {
+      console.error('Error deleting comment:', err);
+    }
+  };
+
   const handleEdit = async (comment, editedContent) => {
     setComments(
       comments.map((currCmnt) =>
@@ -98,6 +126,7 @@ function CommentSection({ postId }) {
       )
     );
   };
+
   return (
     <div className="max-w-2xl mx-auto w-full p-3">
       {currentUser ? (
@@ -166,10 +195,41 @@ function CommentSection({ postId }) {
               comment={comment}
               onLike={handleLike}
               onEdit={handleEdit}
+              onDelete={(commentId) => {
+                setShowModal(true);
+                setCommentToDelete(commentId);
+              }}
             />
           ))}
         </>
       )}
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        popup
+        size="md"
+      >
+        <Modal.Header />
+        <Modal.Body>
+          <div className="text-center">
+            <HiOutlineExclamationCircle className="h-14 w-14 text-gray-400 dark:text-gray-200 mb-4 mx-auto" />
+            <h3 className="mb-5 text-lg text-gray-500 dark:text-gray-400">
+              Are you sure you want to delete this Comment?
+            </h3>
+            <div className="flex justify-center gap-4">
+              <Button
+                color="failure"
+                onClick={() => handleDelete(commentToDelete)}
+              >
+                {`Yes, I'm sure`}
+              </Button>
+              <Button color="gray" onClick={() => setShowModal(false)}>
+                No, cancel
+              </Button>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
     </div>
   );
 }
