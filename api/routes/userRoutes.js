@@ -11,4 +11,6 @@ router.route('/signout').post(userController.signout);
 
 router.route('/getUsers').get(verifyToken, userController.getUsers);
 
+router.route('/getUserForCmnts/:userId').get(userController.getCmntUsers);
+
 module.exports = router;

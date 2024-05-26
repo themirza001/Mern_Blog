@@ -1,12 +1,63 @@
 import { Textarea, Button, Alert } from 'flowbite-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Comment from './Comment';
 
 function CommentSection({ postId }) {
+  const navigate = useNavigate();
   const { currentUser } = useSelector((state) => state.user);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState(''); //used to fetch the comment formthe front end
   const [error, setError] = useState(null);
+  const [comments, setComments] = useState([]); //used to store the recieved array of comments from the backend
+  useEffect(() => {
+    const getComments = async () => {
+      try {
+        const res = await fetch(`/api/v1/comment/getPostComments/${postId}`);
+        const data = await res.json();
+        if (res.ok) {
+          setComments(data);
+        } else {
+          console.log(data.message);
+        }
+      } catch (err) {
+        console.log(err.message);
+      }
+    };
+    getComments();
+  }, [postId]);
+
+  const handleLike = async (commentId) => {
+    try {
+      if (!currentUser) {
+        navigate('/sign-in');
+        return;
+      }
+      const res = await fetch(`/api/v1/comment/likeComment/${commentId}`, {
+        method: 'PUT',
+      });
+      const data = await res.json();
+      if (res.ok) {
+        // console.log('everything is ok');
+        // console.log(data);
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  likes: data.likes,
+                  numberOfLikes: data.numberOfLikes,
+                }
+              : comment
+          )
+        );
+      } else {
+        console.log(data.message);
+      }
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (comment.length > 200) {
@@ -26,9 +77,11 @@ function CommentSection({ postId }) {
         }),
       });
       const data = await res.json();
+      ///console.log(data);
       if (res.ok) {
         setComment('');
         setError(null);
+        setComments([data, ...comments]);
       }
     } catch (err) {
       setError(err.message);
@@ -85,6 +138,21 @@ function CommentSection({ postId }) {
             </Alert>
           )}
         </form>
+      )}
+      {comments.length === 0 ? (
+        <p className="text-sm my-5">No Comments yet</p>
+      ) : (
+        <>
+          <div className="text-sm my-5 flex items-center gap-1">
+            <p>Comments</p>
+            <div className="border border-gray-400 py-1 px-2 rounded-sm">
+              <p>{comments.length}</p>
+            </div>
+          </div>
+          {comments.map((comment) => (
+            <Comment key={comment?._id} comment={comment} onLike={handleLike} />
+          ))}
+        </>
       )}
     </div>
   );

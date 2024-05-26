@@ -8,6 +8,7 @@ exports.signup = async (req, res, next) => {
 
   if (!username || !password || !email)
     return next(new AppError(400, 'All Fields Are required :('));
+
   try {
     const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -16,6 +17,7 @@ exports.signup = async (req, res, next) => {
       email,
       password: hashedPassword,
     });
+
     res.status(201).json(newUser);
   } catch (err) {
     next(new AppError(400, err.message));
