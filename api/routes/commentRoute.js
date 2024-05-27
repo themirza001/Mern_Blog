@@ -18,4 +18,6 @@ router
 router
   .route('/deleteComment/:commentId')
   .delete(verifyToken, commentController.deleteComment);
+
+router.route('/getcomments').get(verifyToken, commentController.getComments);
 module.exports = router;

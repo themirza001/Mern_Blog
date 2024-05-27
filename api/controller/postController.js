@@ -30,6 +30,7 @@ exports.createPost = async (req, res, next) => {
 
 exports.getPosts = async (req, res, next) => {
   try {
+    console.log(`get Posts is called`);
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirec = req.query.order === 'asc' ? 1 : -1;
