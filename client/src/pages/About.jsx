@@ -3,21 +3,21 @@ function About() {
     <div className="min-h-screen flex items-center justify-center">
       <div className="max-w-2xl mx-auto p-3 text-center">
         <div>
-          <h1 className="text-3xl font-semibold text-center my-7">{`About Knowledge Blog`}</h1>
+          <h1 className="text-3xl font-semibold text-center my-7">{`About Blog Wallah`}</h1>
           <div className="text-md text-gray-500 flex flex-col gap-6">
             <p>
-              Welcome to Knowledge Blog, a space where curiosity meets
-              creativity. Here, we explore a diverse range of topics, from the
-              latest trends in technology and lifestyle to timeless insights on
-              health and wellness. Our mission is to inspire and inform our
-              readers through well-researched articles, engaging stories, and
-              practical advice that you can apply to everyday life. Whether
-              you're a seasoned enthusiast or just starting your journey,
-              there's something here for everyone.
+              Welcome to Blog Wallah, a space where curiosity meets creativity.
+              Here, we explore a diverse range of topics, from the latest trends
+              in technology and lifestyle to timeless insights on health and
+              wellness. Our mission is to inspire and inform our readers through
+              well-researched articles, engaging stories, and practical advice
+              that you can apply to everyday life. Whether you're a seasoned
+              enthusiast or just starting your journey, there's something here
+              for everyone.
             </p>
             <p>
-              At Knowledge Blog, we believe in the power of sharing knowledge
-              and experiences. Our team of passionate writers and experts is
+              At Blog Wallah, we believe in the power of sharing knowledge and
+              experiences. Our team of passionate writers and experts is
               dedicated to bringing you high-quality content that resonates with
               your interests and needs. We prioritize authenticity and depth in
               our writing, ensuring that each post not only entertains but also

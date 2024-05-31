@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../Components/OAuth';
 
-
 // import { useDispatch, useSelector } from 'react-redux';
 // import {
 //   signInStart,
@@ -64,9 +63,9 @@ function SignUp() {
         <div className="flex-1">
           <Link to="/home" className="font-bold dark:text-white text-4xl">
             <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 to-pink-500 rounded-lg text-white">
-              {`Mirza's`}
+              {`Blog`}
             </span>
-            Blog
+            Wallah
           </Link>
           <p className="text-sm mt-5">
             This is a blog Project,You can use Your Email id and Password or
