@@ -30,14 +30,15 @@ exports.createPost = async (req, res, next) => {
 
 exports.getPosts = async (req, res, next) => {
   try {
-    console.log(`get Posts is called`);
+    // console.log('Post Controller Func is Called');
+    // console.log(req.query);
     const startIndex = parseInt(req.query.startIndex) || 0;
     const limit = parseInt(req.query.limit) || 9;
     const sortDirec = req.query.order === 'asc' ? 1 : -1;
 
     const posts = await Post.find({
       ...(req.query.userId && { userId: req.query.userId }),
-      ...(req.query.category && { category: req.query.userId }),
+      ...(req.query.category && { category: req.query.category }),
       ...(req.query.slug && { slug: req.query.slug }),
       ...(req.query.postId && { _id: req.query.postId }),
       ...(req.query.searchTerm && {
@@ -50,7 +51,7 @@ exports.getPosts = async (req, res, next) => {
       .sort({ updatedAt: sortDirec })
       .skip(startIndex)
       .limit(limit);
-
+    // console.log(posts);
     const totalPosts = await Post.countDocuments();
 
     const now = new Date();

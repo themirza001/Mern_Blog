@@ -7,7 +7,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Header from './Components/Header';
 import PrivateRoute from './Components/PrivateRoute';
-
+import Search from './pages/Search';
 import FooterComponent from './Components/FooterComponent';
 import OnlyAdminPrivateRoute from './Components/OnlyAdminPrivateRoute';
 import CreatePost from './pages/CreatePost';
@@ -24,6 +24,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />
+        <Route path="/search" element={<Search />} />
         <Route element={<PrivateRoute />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
