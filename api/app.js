@@ -20,11 +20,14 @@ app.use('/api/v1/user', userRouter);
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/post', postRouter);
 app.use('/api/v1/comment', commentRouter);
+app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.all('*', (req, res, next) => {
   return next(new AppError(404, 'Web Page Does Not Exist :)'));
 });
-
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;
   const message = err.message || 'Internal Server Error';

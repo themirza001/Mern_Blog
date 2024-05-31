@@ -13,7 +13,6 @@ function Search() {
 
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -41,11 +40,6 @@ function Search() {
         const data = await res.json();
         // console.log(data);
         setPosts(data.posts);
-        if (data.posts.length >= 9) {
-          setShowMore(true);
-        } else {
-          setShowMore(false);
-        }
       }
     };
     fetchPosts();
